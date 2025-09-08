@@ -99,7 +99,7 @@ if uploaded_file:
 
     ws["A2"] = "Informe de pruebas IA"
     ws["A2"].font = Font(bold=True, size=20)
-    ws.row_dimensions[2].height = 40         # <-- Más alto el título
+    ws.row_dimensions[2].height = 35         # <-- Más alto el título
     ws.column_dimensions["A"].width = 40     # <-- Más ancha la columna A
 
 
