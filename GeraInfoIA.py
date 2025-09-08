@@ -102,10 +102,9 @@ if uploaded_file:
     ws.row_dimensions[2].height = 35         # <-- Más alto el título
     ws.column_dimensions["A"].width = 40     # <-- Más ancha la columna A
 
-
     ws["A4"].font = Font(bold=True)
     ws["A9"].font = Font(bold=True)
-    ws["A13"].font = Font(bold=True)
+    ws["A14"].font = Font(bold=True)
 
     ws["B4"] = '=IF(AND(B11>0.8,B15=0),"PASSED","FAILED")'
     ws["B5"] = version_agente
