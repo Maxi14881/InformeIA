@@ -98,7 +98,7 @@ if uploaded_file:
     ws["B4"] = '=IF(AND(B11>0.8,B15=0),"PASSED","FAILED")'
     ws["B5"] = version_agente
     ws["B6"] = datetime.today().strftime("%d/%m/%Y")
-    ws["B7"] = 5
+    ws["B7"] = df["Código de ejecución"].nunique()  # Cantidad de ejecuciones únicas
 
     fila_inicio = 18
     num_filas = pivot.shape[0]
