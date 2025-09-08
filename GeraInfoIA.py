@@ -96,8 +96,12 @@ if uploaded_file:
     wb = load_workbook(output)
     ws = wb.active
     ws.title = "RESUMEN"
+
     ws["A2"] = "Informe de pruebas IA"
-    ws["A2"].font = Font(bold=True, size=18)
+    ws["A2"].font = Font(bold=True, size=20)
+    ws.row_dimensions[2].height = 40         # <-- Más alto el título
+    ws.column_dimensions["A"].width = 40     # <-- Más ancha la columna A
+
 
     ws["A4"].font = Font(bold=True)
     ws["A9"].font = Font(bold=True)
