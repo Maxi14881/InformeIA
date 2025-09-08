@@ -62,8 +62,12 @@ if uploaded_file:
     df.columns = df.columns.str.strip()
     df['Resultado'] = pd.to_numeric(df['Resultado'], errors='coerce')
 
-    version_agente = str(df['Versión del agente'].iloc[0]) if 'Versión del agente' in df.columns else "N/A"
-
+    #version_agente = str(df['Versión del agente'].iloc[0]) if 'Versión del agente' in df.columns else "N/A"
+    if 'Versión del agente' in df.columns:
+        version_agente = str(df['Versión del agente'].max())
+    else:
+        version_agente = "N/A"
+    
     pivot = pd.pivot_table(
         df,
         index='Id del caso de prueba',
