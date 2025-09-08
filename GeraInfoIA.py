@@ -78,7 +78,7 @@ if uploaded_file:
         encabezado = pd.DataFrame({
             'A': [
                 '', '', '', 
-                'ANALISIS GENERAL DEL ASISTENTE', 'Versión del asistente', 'Fecha de ejecución', 'Cantidad de ejecuciones', '',
+                'ANÁLISIS GENERAL DEL ASISTENTE', 'Versión del asistente', 'Fecha de ejecución', 'Cantidad de ejecuciones', '',
                 'CRITERIO ACEPTACIÓN - REGLA 80 - 80', 'Total de casos analizados', 'Total de casos con efectividad >= 80%', '% casos > 80%',
                 '', 
                 'CRITERIO ACEPTACIÓN - NO FAILS', 'Total de casos sin casos de éxito'
@@ -94,6 +94,10 @@ if uploaded_file:
     ws.title = "RESUMEN"
     ws["A2"] = "Informe de pruebas IA"
     ws["A2"].font = Font(bold=True, size=18)
+
+    ws["A4"].font = Font(bold=True)
+    ws["A9"].font = Font(bold=True)
+    ws["A13"].font = Font(bold=True)
 
     ws["B4"] = '=IF(AND(B11>0.8,B15=0),"PASSED","FAILED")'
     ws["B5"] = version_agente
