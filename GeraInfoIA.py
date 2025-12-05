@@ -170,7 +170,7 @@ logo_base64 = image_to_base64(logo_path)
 
 # Mostrar imagen enlazada
 st.markdown(
-    f'<a href="{youtube_link}" target="_blank">'
+    f'<a href="{link}" target="_blank">'
     f'<img src="data:image/jpeg;base64,{logo_base64}" style="width:100%;"/>'
     '</a>',
     unsafe_allow_html=True
