@@ -164,8 +164,8 @@ def image_to_base64(image_path):
         return base64.b64encode(image_file.read()).decode()
 
 # URL de la imagen y enlace a YouTube
-logo_path = "C:/Maxi/Cosas mias/Canal Youtube/binit.png"
-youtube_link = "https://binit.tech/"
+logo_path = "binit.png"
+link = "https://binit.tech/"
 logo_base64 = image_to_base64(logo_path)
 
 # Mostrar imagen enlazada
