@@ -204,6 +204,41 @@ uploaded_file = st.file_uploader("Sube tu archivo Excel de origen", type=["xlsx"
 if uploaded_file:
     df = pd.read_excel(uploaded_file)
     df.columns = df.columns.str.strip()
+    
+    # Mapeo de columnas inglés -> español
+    column_mapping = {
+        'Result': 'Resultado',
+        'Test Case ID': 'Id del caso de prueba',
+        'Execution Code': 'Código de ejecución',
+        'Agent Version': 'Versión del agente',
+        'Characteristic': 'Característica',
+        'Test Case': 'Caso de prueba',
+        'Expected Result': 'Resultado esperado'
+    }
+    
+    # Detectar idioma y renombrar columnas si es necesario
+    columnas_en_ingles = [col for col in column_mapping.keys() if col in df.columns]
+    columnas_en_espanol = [col for col in column_mapping.values() if col in df.columns]
+    
+    if columnas_en_ingles:
+        st.info(f"🌐 Detectadas columnas en inglés. Realizando traducción automática...")
+        # Renombrar columnas de inglés a español
+        df.rename(columns=column_mapping, inplace=True)
+        st.success(f"✅ Columnas traducidas: {', '.join(columnas_en_ingles)}")
+    elif columnas_en_espanol:
+        st.info(f"🇪🇸 Columnas detectadas en español.")
+    
+    # Mostrar información de depuración sobre las columnas
+    st.write("**Columnas después del mapeo:**")
+    st.write(list(df.columns))
+    
+    # Verificar si existe la columna 'Resultado'
+    if 'Resultado' not in df.columns:
+        st.error(f"❌ No se encontró la columna 'Resultado' en el archivo.")
+        st.error(f"📋 Columnas disponibles: {', '.join(df.columns)}")
+        st.info("💡 Asegúrate de que tu archivo Excel contenga una columna llamada 'Resultado' o 'Result'")
+        st.stop()
+    
     df['Resultado'] = pd.to_numeric(df['Resultado'], errors='coerce')
 
     if 'Versión del agente' in df.columns:
@@ -218,7 +253,10 @@ if uploaded_file:
     if tiene_caracteristicas:
         caracteristicas_unicas = df['Característica'].dropna().unique().tolist()
         st.info(f"📊 Detectadas {len(caracteristicas_unicas)} características: {', '.join(map(str, caracteristicas_unicas))}")
-        st.info("Se generará un resumen general y resúmenes individuales por cada característica.")
+        if len(caracteristicas_unicas) > 1:
+            st.info("Se generarán resúmenes individuales por cada característica.")
+        else:
+            st.info("Se generará un resumen general y resúmenes individuales por cada característica.")
 
     pivot = pd.pivot_table(
         df,
@@ -270,7 +308,7 @@ if uploaded_file:
         ws["A9"].font = Font(bold=True)
         ws["A13"].font = Font(bold=True)
 
-        ws["B4"] = '=IF(AND(B11>0.8,B15=0),"PASSED","FAILED")'
+        ws["B4"] = '=IF(AND(B12>0.8,B15=0),"PASSED","FAILED")'
         ws["B5"] = version_agente
         ws["B6"] = datetime.today().strftime("%d/%m/%Y")
         ws["B7"] = df["Código de ejecución"].nunique()  # Cantidad de ejecuciones únicas
